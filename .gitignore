@@ -1,8 +1,0 @@
-# Data and artifacts
-checkpoints/
-data/
-results/
-
-# Python cache
-__pycache__/
-*.pyc
