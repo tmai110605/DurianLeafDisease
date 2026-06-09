@@ -1,0 +1,28 @@
+Model: mobilenetv3_small
+Checkpoint: checkpoints/mobilenetv3_small_img224_bs16_lr0.0001_sw1.0/best_mobilenetv3_small_multitask.pth
+
+Disease Classification Report
+                     precision    recall  f1-score   support
+
+            healthy     0.8094    0.9064    0.8551       267
+              algal     0.8686    0.7238    0.7896       210
+allocaridara_attack     0.8063    0.7586    0.7817       203
+             blight     0.8587    0.9059    0.8817       255
+          phomopsis     0.7583    0.7615    0.7599       239
+
+           accuracy                         0.8186      1174
+          macro avg     0.8203    0.8112    0.8136      1174
+       weighted avg     0.8198    0.8186    0.8171      1174
+
+
+Severity Classification Report
+              precision    recall  f1-score   support
+
+     healthy     0.8200    0.9213    0.8677       267
+        mild     0.6848    0.5603    0.6163       473
+    moderate     0.4398    0.5419    0.4855       310
+      severe     0.5333    0.4516    0.4891       124
+
+    accuracy                         0.6261      1174
+   macro avg     0.6195    0.6188    0.6147      1174
+weighted avg     0.6348    0.6261    0.6255      1174

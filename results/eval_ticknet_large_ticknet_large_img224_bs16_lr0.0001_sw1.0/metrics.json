@@ -1,0 +1,23 @@
+{
+    "model": "ticknet_large",
+    "checkpoint": "checkpoints/ticknet_large_img224_bs16_lr0.0001_sw1.0/best_ticknet_large_multitask.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "disease_accuracy": 0.9284497444633731,
+    "disease_precision_macro": 0.9272058565534799,
+    "disease_recall_macro": 0.9281946542378201,
+    "disease_f1_macro": 0.9268491584211878,
+    "severity_accuracy": 0.7061328790459966,
+    "severity_precision_macro": 0.7142555965550517,
+    "severity_recall_macro": 0.644269950914695,
+    "severity_f1_macro": 0.6553133336156372,
+    "total_params": 3424731,
+    "trainable_params": 3424731,
+    "flops": 1293927936.0,
+    "flops_readable": "1.294G",
+    "params_readable": "3.425M",
+    "epoch": 53,
+    "val_loss": 0.9176970386097574,
+    "val_disease_acc": 0.9341880341880342,
+    "val_severity_acc": 0.7034188034188035
+}

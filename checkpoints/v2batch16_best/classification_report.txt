@@ -1,0 +1,25 @@
+Disease Classification Report
+                     precision    recall  f1-score   support
+
+            healthy     0.9476    0.9476    0.9476       267
+              algal     0.8426    0.8667    0.8545       210
+allocaridara_attack     0.8558    0.9064    0.8804       203
+             blight     0.9349    0.9569    0.9457       255
+          phomopsis     0.9209    0.8285    0.8722       239
+
+           accuracy                         0.9037      1174
+          macro avg     0.9004    0.9012    0.9001      1174
+       weighted avg     0.9047    0.9037    0.9036      1174
+
+
+Severity Classification Report
+              precision    recall  f1-score   support
+
+     healthy     0.9472    0.9401    0.9436       267
+        mild     0.7439    0.6448    0.6908       473
+    moderate     0.4824    0.6194    0.5424       310
+      severe     0.5743    0.4677    0.5156       124
+
+    accuracy                         0.6865      1174
+   macro avg     0.6869    0.6680    0.6731      1174
+weighted avg     0.7032    0.6865    0.6906      1174
