@@ -1,0 +1,16 @@
+Model: mobilenetv2
+Task: disease
+Checkpoint: checkpoints/mobilenetv2_task_disease_img224_bs16_lr0.0001/best_mobilenetv2_disease.pth
+
+Disease Classification Report
+                     precision    recall  f1-score   support
+
+            healthy     0.8682    0.9625    0.9130       267
+              algal     0.8947    0.8095    0.8500       210
+allocaridara_attack     0.8832    0.8571    0.8700       203
+             blight     0.9105    0.9176    0.9141       255
+          phomopsis     0.8590    0.8410    0.8499       239
+
+           accuracy                         0.8825      1174
+          macro avg     0.8831    0.8776    0.8794      1174
+       weighted avg     0.8829    0.8825    0.8817      1174

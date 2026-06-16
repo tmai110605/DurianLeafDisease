@@ -1,0 +1,15 @@
+Model: resnet50
+Task: severity
+Checkpoint: checkpoints/resnet50_task_severity_img224_bs16_lr0.0001/best_resnet50_severity.pth
+
+Severity Classification Report
+              precision    recall  f1-score   support
+
+     healthy     0.9138    0.9925    0.9515       267
+        mild     0.7418    0.7167    0.7290       473
+    moderate     0.5056    0.5806    0.5405       310
+      severe     0.5634    0.3226    0.4103       124
+
+    accuracy                         0.7019      1174
+   macro avg     0.6811    0.6531    0.6578      1174
+weighted avg     0.6997    0.7019    0.6962      1174

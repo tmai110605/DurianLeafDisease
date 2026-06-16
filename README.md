@@ -1,260 +1,195 @@
 # 🌿 DurianLeafProject
 
-A deep learning project for **multi-task classification** of durian leaf diseases — simultaneously predicting the **disease type** and **severity level** from a single leaf image using custom-built lightweight CNN architectures.
+A modern deep learning codebase for **multi-task and single-task classification** of durian leaf diseases and severity levels. It combines custom-built convolutional neural networks (CNNs), Depth Estimation (Depth Anything V2), Geo-GradCAM 3D, Weather forecasting integration, and Large Language Model (Llama-3.3-70b via Groq) case-based treatment recommendations.
 
 ---
 
-## 📌 Overview
+## 📌 Highlight Features
 
-This project trains and evaluates multiple CNN architectures on the **Durian Leaf Diseases Dataset (DLDD)**, supporting both:
-
-- **Multi-task learning** — jointly predicting disease type + severity in one forward pass
-- **Single-task learning** — training separate models for disease or severity only
-
-It also supports **Grad-CAM visualization** to interpret model predictions.
+- **Multi-task & Single-task Learning**: Jointly predicts **disease type** and **severity level** simultaneously in one forward pass, or trains dedicated single-task networks.
+- **Custom CNN Architectures from Scratch**: Supports 7 lightweight to medium architectures: MobileNetV2, MobileNetV3 (Small/Large), ResNet18, ResNet50, DenseNet121, and TickNet-Large.
+- **Geo-GradCAM 3D Visualisation**: Reconstructs depth using *Depth Anything V2*, aligns it with Grad-CAM saliency maps, and renders an interactive 3D surface plot using Plotly.
+- **Context-Aware Recommendations**: Leverages a local Case-Based Reasoning (CBR) database combined with real-time weather forecasts (via Open-Meteo) and geo-coordinates (via Nominatim reverse-geocoding) to generate customised treatment plans using Llama-3.3-70b.
+- **Premium Streamlit Interface**: An interactive web app featuring browser geolocation, real-time weather risks, depth estimation overlays, interactive 3D graphics, and printable diagnostic summaries.
 
 ---
 
-## 🗂️ Project Structure
+## 🗂️ Project Directory Structure
 
 ```
 DurianLeafProject/
-├── data/
+├── app/                          # 🖥️ Interactive Streamlit Interface
+│   ├── app.py                    # Streamlit web app main script
+│   └── __init__.py
+│
+├── pipeline/                     # 🔬 Inference & Recommendation Engine
+│   ├── pipeline.py               # Combined pipeline (CNN inference + Depth + GradCAM 3D + LLM)
+│   ├── recommender.py            # Case-Based Reasoning (CBR) logic + Groq LLM client
+│   ├── weather_kb.py             # Open-Meteo weather forecast client & rule-based weather risks
+│   ├── knowledge_base/           # Treatment databases and weather risk templates (JSON)
+│   │   ├── durian_leaf_case_based_recommendation_kb.json
+│   │   └── durian_leaf_weather_risk_kb.json
+│   └── __init__.py
+│
+├── models/                       # 🧠 Custom CNN Architectures & Neural Modules
+│   ├── MAFC.py                   # Multi-scale Attention Feature Calibration module
+│   ├── mobilenetv3_custom.py     # MobileNetV2 / MobileNetV3 (Multi-task variants)
+│   ├── mobilenetv3_single.py     # MobileNetV2 / MobileNetV3 (Single-task variants)
+│   ├── resnet_custom.py          # ResNet18 / ResNet50 (Multi-task variants)
+│   ├── resnet_single.py          # ResNet18 / ResNet50 (Single-task variants)
+│   ├── densenet_custom.py        # DenseNet121 (Multi-task)
+│   ├── densenet_single.py        # DenseNet121 (Single-task)
+│   ├── ticknet_custom.py         # TickNet-Large (Multi-task)
+│   ├── ticknet_single.py         # TickNet-Large (Single-task)
+│   └── __init__.py
+│
+├── training/                     # 🏋️ Training & Evaluation Framework
+│   ├── config.py                 # Global constants, hyperparameter defaults, dataset paths
+│   ├── dataset.py                # Dataset loader for Multi-task learning
+│   ├── dataset_single.py         # Dataset loader for Single-task learning
+│   ├── train.py                  # Multi-task training orchestration script
+│   ├── train_single.py           # Single-task training orchestration script
+│   ├── evaluate.py               # Multi-task test evaluation & metric plotting
+│   ├── evaluate_single.py        # Single-task test evaluation & metric plotting
+│   ├── utils.py                  # Helper functions (profiling, parameter & FLOPs counting, seed)
+│   └── __init__.py
+│
+├── data/                         # 🍂 Dataset Directory (Excluded from git)
 │   └── Durian_Leaf_Diseases/
-│       ├── train/          # Training images + metadata_train.csv
-│       ├── val/            # Validation images + metadata_val.csv
-│       └── test/           # Test images + metadata_test.csv
-├── checkpoints/            # Saved model checkpoints (.pth) + training logs
-│   └── v2batch16_best/
-│       ├── best_mobilenetv3_multitask.pth
-│       ├── training_log.json
-│       ├── classification_report.txt
-│       └── confusion_matrix_*.png
-├── results/                # Evaluation outputs (metrics, confusion matrices)
-├── Grad-CAM/               # Grad-CAM visualization outputs
-└── src/
-    ├── config.py               # Global paths and hyperparameter defaults
-    ├── dataset.py              # Dataset loader (multi-task)
-    ├── dataset_single.py       # Dataset loader (single-task)
-    ├── MAFC.py                 # Multi-scale Attention Feature Calibration module
-    ├── mobilenetv3_custom.py   # MobileNetV2 / MobileNetV3-Small / MobileNetV3-Large (multi-task)
-    ├── mobilenetv3_single.py   # MobileNet variants (single-task)
-    ├── resnet_custom.py        # ResNet18 / ResNet50 (multi-task)
-    ├── resnet_single.py        # ResNet variants (single-task)
-    ├── densenet_custom.py      # DenseNet121 (multi-task)
-    ├── densenet_single.py      # DenseNet121 (single-task)
-    ├── ticknet_custom.py       # TickNet-Large (multi-task)
-    ├── ticknet_single.py       # TickNet-Large (single-task)
-    ├── train.py                # Multi-task training script
-    ├── train_single.py         # Single-task training script
-    ├── evaluate.py             # Multi-task evaluation script
-    ├── evaluate_single.py      # Single-task evaluation script
-    ├── pipeline.py             # Inference + Grad-CAM visualization
-    └── utils.py                # Seed, device, parameter counting, FLOPs
+│       ├── train/                # Training images + metadata_train.csv
+│       ├── val/                  # Validation images + metadata_val.csv
+│       └── test/                 # Test images + metadata_test.csv
+│
+├── checkpoints/                  # 💾 Saved weights (.pth) & training logs (.json)
+├── results/                      # 📊 Evaluation metrics and confusion matrices
+├── Grad-CAM/                     # 🖼️ Local Grad-CAM 2D image overlays
+├── output/                       # 🌐 Saved Geo-GradCAM 3D HTMLs & output assets
+└── .env                          # 🔑 Local environment configurations (GROQ API key)
 ```
 
 ---
 
-## 🍂 Dataset
+## ⚙️ Installation & Setup
 
-The dataset contains durian leaf images organized into the following categories:
+1. **Install Python packages**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+   *Required key packages: `torch`, `torchvision`, `transformers`, `streamlit`, `streamlit-geolocation`, `plotly`, `opencv-python`, `pandas`, `pillow`, `scikit-learn`, `matplotlib`, `tqdm`, `python-dotenv`.*
 
-| Task | Classes |
-|------|---------|
-| **Disease** | `healthy`, `algal`, `allocaridara_attack`, `blight`, `phomopsis` |
-| **Severity** | `healthy` (0), `mild` (1), `moderate` (2), `severe` (3) |
+2. **Configure Groq API Key**:
+   Create a `.env` file in the project root:
+   ```env
+   GROQ_API_KEY=your_groq_api_key_here
+   ```
+   *Note: Weather forecasting is powered by Open-Meteo and coordinates lookup by OpenStreetMap Nominatim, both of which are free and do not require API keys.*
 
-Each split (`train/`, `val/`, `test/`) has a corresponding CSV file (`metadata_*.csv`) with columns:
-- `file_name`, `file_path`, `disease_type`, `label_id`, `severity`
-
-> **Note:** The dataset is not included in this repository. Please prepare the data at `data/Durian_Leaf_Diseases/`.
-
----
-
-## 🧠 Model Architectures
-
-All models are implemented **from scratch** (no pretrained weights) and adapted for multi-task output with two classification heads:
-
-| Model | Type |
-|-------|------|
-| **MobileNetV2** | Inverted residual blocks |
-| **MobileNetV3-Small** | Inverted residual + SE + HSwish |
-| **MobileNetV3-Large** | Inverted residual + SE + HSwish |
-| **ResNet18** | Residual blocks |
-| **ResNet50** | Bottleneck residual blocks |
-| **DenseNet121** | Dense connections |
-| **TickNet-Large** | FR-PDP blocks + SE |
-
-
+3. **Data Preparation**:
+   Place the **Durian Leaf Diseases Dataset (DLDD)** under `data/Durian_Leaf_Diseases/`. Ensure the directories `train/`, `val/`, and `test/` along with their corresponding CSV files are present.
 
 ---
 
-## ⚙️ Installation
+## 🚀 Running the Project
 
+> [!IMPORTANT]
+> **Always run the scripts from the project root directory** (e.g., `DurianLeafProject/`) to ensure the modular imports (`models.*`, `training.*`, `pipeline.*`) work correctly.
+
+### 1. Start the Streamlit Web Application
+Run the interactive web app locally from the project root:
 ```bash
-pip install -r requirements.txt
+streamlit run app/app.py
 ```
+Open `http://localhost:8501` on your browser. 
+- Adjust parameters (resolution, Depth Map resolution, Grad-CAM attention boost) from the sidebar.
+- Enable Geolocation to automatically fetch current weather data and calculate treatment risk based on humidity and rainfall.
 
-**Requirements:**
-```
-torch
-torchvision
-pandas
-pillow
-scikit-learn
-matplotlib
-tqdm
-```
+### 2. Run Training
+To train a model, use the `python -m` syntax from the project root:
 
-> Recommended: Python 3.10+, CUDA-enabled GPU.
+- **Multi-task Training (Disease + Severity)**:
+  ```bash
+  python -m training.train --model mobilenetv2 --epochs 30 --batch_size 16 --lr 1e-4
+  ```
+- **Single-task Training (Disease OR Severity)**:
+  ```bash
+  python -m training.train_single --model resnet18 --task disease --epochs 30 --batch_size 16
+  ```
 
----
+#### Command-line Options:
+| Argument | Options / Defaults | Description |
+|---|---|---|
+| `--model` | `mobilenetv2`, `mobilenetv3_small`, `mobilenetv3_large`, `resnet18`, `resnet50`, `densenet121`, `ticknet_large` | Model architecture (Required) |
+| `--task` | `disease`, `severity` | Prediction target (For single-task training only) |
+| `--epochs` | Default: `60` | Number of training epochs |
+| `--batch_size` | Default: `32` | Batch size |
+| `--image_size` | Default: `224` | Input image size |
+| `--lr` | Default: `1e-4` | Learning rate |
+| `--use_class_weight` / `--use_severity_weight` | Flags | Enable class-weighted loss (for imbalanced classes) |
 
-## 🚀 Usage
+### 3. Model Evaluation
+Evaluate a trained model checkpoint on the test set and generate classification reports:
 
-All scripts must be run from the **`src/`** directory (or with the project root in `PYTHONPATH`).
+- **Multi-task Evaluation**:
+  ```bash
+  python -m training.evaluate --model mobilenetv2 --run_dir mobilenetv2_img224_bs32_lr0.0001
+  ```
+- **Single-task Evaluation**:
+  ```bash
+  python -m training.evaluate_single --model resnet18 --task disease --run_dir resnet18_task_disease_img224_bs16_lr0.0001
+  ```
+Outputs (classification reports, metric JSONs, and confusion matrices) are stored in `results/`.
 
-### 1. Multi-task Training
-
+### 4. Direct Inference CLI & API
+You can run the end-to-end inference pipeline on a single leaf image from the command line:
 ```bash
-cd src
-python train.py --model mobilenetv2 --epochs 30 --batch_size 16 --lr 1e-4
+python -m pipeline.pipeline
 ```
+*Note: The CLI is configured via the entry point inside `pipeline/pipeline.py`.*
 
-**Available models:** `mobilenetv2`, `mobilenetv3_small`, `mobilenetv3_large`, `resnet18`, `resnet50`, `densenet121`, `ticknet_large`
-
-**Key arguments:**
-
-| Argument | Default | Description |
-|----------|---------|-------------|
-| `--model` | required | Model architecture |
-| `--epochs` | 30 | Number of training epochs |
-| `--batch_size` | 32 | Batch size |
-| `--image_size` | 224 | Input image resolution |
-| `--lr` | 1e-4 | Learning rate |
-| `--weight_decay` | 1e-4 | Weight decay (AdamW) |
-| `--dropout` | 0.2 | Dropout rate |
-| `--severity_loss_weight` | 1.0 | Weight multiplier for severity loss |
-| `--use_severity_weight` | False | Use class-weighted loss for severity |
-| `--save_all` | False | Save checkpoint every epoch |
-
-Checkpoints and training logs are saved to:
-```
-checkpoints/<model>_img<size>_bs<batch>_lr<lr>_sw<sw>/
-```
-
----
-
-### 2. Single-task Training
-
-```bash
-cd src
-python train_single.py --model resnet18 --task disease --epochs 30 --batch_size 16
-```
-
-**Additional argument:**
-
-| Argument | Options | Description |
-|----------|---------|-------------|
-| `--task` | `disease` / `severity` | Which task to train |
-| `--use_class_weight` | flag | Use class-weighted CrossEntropyLoss |
-
----
-
-### 3. Evaluation
-
-```bash
-cd src
-python evaluate.py --model mobilenetv2 --run_dir v2batch16_best
-```
-
-Outputs saved to `results/eval_<model>_<run_dir>/`:
-- `classification_report.txt`
-- `metrics.json`
-- `confusion_matrix_disease.png`
-- `confusion_matrix_severity.png`
-
----
-
-### 4. Inference + Grad-CAM
-
-Edit the paths in `pipeline.py` and run:
-
-```bash
-cd src   # hoặc chạy từ thư mục gốc
-python pipeline.py
-```
-
-Or use the function directly:
-
+To integrate inference inside your custom Python scripts:
 ```python
-from src.pipeline import predict_and_gradcam
+from pipeline.pipeline import run_pipeline
 
-result = predict_and_gradcam(
+results = run_pipeline(
     image_path="data/Durian_Leaf_Diseases/test/algal/DLDD_TEST_000006.jpg",
     checkpoint_path="checkpoints/v2batch16_best/best_mobilenetv3_multitask.pth",
-    output_dir="Grad-CAM",
+    tasks=("disease", "severity"),
     img_size=224,
-    task_for_cam="disease"   # or "severity"
+    max_size=200,
+    attention_boost=0.4,
+    output_dir="output",
+    save_2d_overlay=True,
+    save_3d_html=True,
+    use_weather=True
 )
-print(result)
+
+print(f"Disease Class : {results['disease_label']} ({results['disease_confidence']:.2%})")
+print(f"Severity Level: {results['severity_label']} ({results['severity_confidence']:.2%})")
+print(f"Treatment Recommendations: {results['recommendation']['recommendation_text']}")
 ```
-
-**Output example:**
-```json
-{
-  "disease_idx": 1,
-  "disease_label": "class_1",
-  "disease_confidence": 0.9997,
-  "severity_idx": 2,
-  "severity_label": "severity_2",
-  "severity_confidence": 0.7704,
-  "gradcam_task": "disease",
-  "gradcam_path": "Grad-CAM/DLDD_TEST_000006_gradcam_disease.jpg"
-}
-```
-
-Grad-CAM overlays are saved to the `Grad-CAM/` directory.
-
-
-
-## 🧪 Training Configuration
-
-| Parameter | Value |
-|-----------|-------|
-| Optimizer | AdamW |
-| Learning rate | 1e-4 |
-| Weight decay | 1e-4 |
-| Batch size | 16 |
-| Image size | 224 × 224 |
-| Epochs | 30 |
-| Dropout | 0.2 |
-| Loss | CrossEntropyLoss (disease) + CrossEntropyLoss (severity) |
-| Normalization | ImageNet mean/std `[0.485, 0.456, 0.406]` / `[0.229, 0.224, 0.225]` |
-| Data augmentation | RandomResizedCrop, HorizontalFlip, Rotation(20°), ColorJitter |
-| Seed | 42 |
 
 ---
 
-## 📁 Checkpoint Format
+## 🍂 Dataset Specifications
 
-Each saved `.pth` checkpoint contains:
+The Durian Leaf Diseases Dataset is structured into:
+- **Disease types**: `healthy`, `algal` (tảo lục), `allocaridara_attack` (rầy nhảy), `blight` (thối lá), `phomopsis` (đốm lá Phomopsis).
+- **Severity levels**: `severity_0` (Khỏe mạnh), `severity_1` (Nhẹ), `severity_2` (Trung bình), `severity_3` (Nặng).
 
+---
+
+## 💾 Checkpoint Format
+Saved `.pth` model weights contain:
 ```python
 {
     "model_name": str,
-    "model_state_dict": ...,
-    "optimizer_state_dict": ...,
+    "model_state_dict": dict,
+    "optimizer_state_dict": dict,
     "epoch": int,
     "train_loss": float,
-    "train_disease_acc": float,
-    "train_severity_acc": float,
     "val_loss": float,
     "val_disease_acc": float,
     "val_severity_acc": float,
-    "total_params": int,
-    "trainable_params": int,
-    "flops": int,
     "flops_readable": str,
     "params_readable": str,
     "image_size": int,
@@ -263,10 +198,4 @@ Each saved `.pth` checkpoint contains:
 ```
 
 ---
-
-## 📝 Notes
-
-- The `Unexpected keys` warning about `total_ops` / `total_params` during inference is harmless — these are profiling buffers added by the **THOP** library during FLOPs calculation and are automatically stripped before saving.
-- For best inference results, ensure the image path is correct relative to the project root when running `pipeline.py`.
-- GPU is used automatically if available (`cuda`), otherwise falls back to `cpu`.
-
+*Created with ❤️ for durian farm diagnostics.*

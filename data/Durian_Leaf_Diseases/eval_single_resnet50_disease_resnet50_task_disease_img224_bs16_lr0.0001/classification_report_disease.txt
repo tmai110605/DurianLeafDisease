@@ -1,0 +1,16 @@
+Model: resnet50
+Task: disease
+Checkpoint: checkpoints/resnet50_task_disease_img224_bs16_lr0.0001/best_resnet50_disease.pth
+
+Disease Classification Report
+                     precision    recall  f1-score   support
+
+            healthy     0.9556    0.9663    0.9609       267
+              algal     0.9100    0.9143    0.9121       210
+allocaridara_attack     0.9212    0.9212    0.9212       203
+             blight     0.9672    0.9255    0.9459       255
+          phomopsis     0.9106    0.9372    0.9237       239
+
+           accuracy                         0.9344      1174
+          macro avg     0.9329    0.9329    0.9328      1174
+       weighted avg     0.9348    0.9344    0.9345      1174

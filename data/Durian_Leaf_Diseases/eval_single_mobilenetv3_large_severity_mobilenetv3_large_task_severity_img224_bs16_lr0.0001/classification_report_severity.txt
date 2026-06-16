@@ -1,0 +1,15 @@
+Model: mobilenetv3_large
+Task: severity
+Checkpoint: checkpoints/mobilenetv3_large_task_severity_img224_bs16_lr0.0001/best_mobilenetv3_large_severity.pth
+
+Severity Classification Report
+              precision    recall  f1-score   support
+
+     healthy     0.8191    0.9326    0.8722       267
+        mild     0.7209    0.5624    0.6318       473
+    moderate     0.4668    0.6581    0.5462       310
+      severe     0.5781    0.2984    0.3936       124
+
+    accuracy                         0.6440      1174
+   macro avg     0.6462    0.6129    0.6109      1174
+weighted avg     0.6610    0.6440    0.6387      1174

@@ -1,0 +1,19 @@
+{
+    "model": "densenet121",
+    "task": "severity",
+    "checkpoint": "checkpoints/densenet121_task_severity_img224_bs16_lr0.0001/best_densenet121_severity.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "accuracy": 0.6575809199318569,
+    "precision_macro": 0.65933203250126,
+    "recall_macro": 0.6129521303972572,
+    "f1_macro": 0.6219044993000455,
+    "total_params": 7480708,
+    "trainable_params": 7480708,
+    "flops": 2896560640.0,
+    "flops_readable": "2.897G",
+    "params_readable": "7.481M",
+    "epoch": 20,
+    "val_loss": 0.7042039496521665,
+    "val_acc": 0.6641025641025641
+}

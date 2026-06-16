@@ -1,0 +1,19 @@
+{
+    "model": "resnet50",
+    "task": "disease",
+    "checkpoint": "checkpoints/resnet50_task_disease_img224_bs16_lr0.0001/best_resnet50_disease.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "accuracy": 0.934412265758092,
+    "precision_macro": 0.9328945297291268,
+    "recall_macro": 0.9328977609858615,
+    "f1_macro": 0.9327586517567115,
+    "total_params": 24559685,
+    "trainable_params": 24559685,
+    "flops": 4132745728.0,
+    "flops_readable": "4.133G",
+    "params_readable": "24.560M",
+    "epoch": 44,
+    "val_loss": 0.1908219926843308,
+    "val_acc": 0.9461538461538461
+}

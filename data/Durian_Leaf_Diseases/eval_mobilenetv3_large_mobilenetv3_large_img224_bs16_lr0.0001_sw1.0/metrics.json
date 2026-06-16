@@ -1,0 +1,23 @@
+{
+    "model": "mobilenetv3_large",
+    "checkpoint": "checkpoints/mobilenetv3_large_img224_bs16_lr0.0001_sw1.0/best_mobilenetv3_large_multitask.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "disease_accuracy": 0.8568994889267462,
+    "disease_precision_macro": 0.8602439176696031,
+    "disease_recall_macro": 0.8533403781495122,
+    "disease_f1_macro": 0.8546139701835311,
+    "severity_accuracy": 0.6550255536626917,
+    "severity_precision_macro": 0.6266574705057003,
+    "severity_recall_macro": 0.6136104538136576,
+    "severity_f1_macro": 0.6163506751095984,
+    "total_params": 4211727,
+    "trainable_params": 4211727,
+    "flops": 232966688.0,
+    "flops_readable": "232.967M",
+    "params_readable": "4.212M",
+    "epoch": 36,
+    "val_loss": 1.161410189101584,
+    "val_disease_acc": 0.882051282051282,
+    "val_severity_acc": 0.6752136752136753
+}

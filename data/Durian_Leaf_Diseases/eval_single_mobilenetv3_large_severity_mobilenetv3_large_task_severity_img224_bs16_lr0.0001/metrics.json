@@ -1,0 +1,19 @@
+{
+    "model": "mobilenetv3_large",
+    "task": "severity",
+    "checkpoint": "checkpoints/mobilenetv3_large_task_severity_img224_bs16_lr0.0001/best_mobilenetv3_large_severity.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "accuracy": 0.6439522998296422,
+    "precision_macro": 0.6462225945021177,
+    "recall_macro": 0.6128509368148983,
+    "f1_macro": 0.6109462136103593,
+    "total_params": 4205322,
+    "trainable_params": 4205322,
+    "flops": 232960288.0,
+    "flops_readable": "232.960M",
+    "params_readable": "4.205M",
+    "epoch": 31,
+    "val_loss": 0.7572227246740945,
+    "val_acc": 0.6418803418803419
+}

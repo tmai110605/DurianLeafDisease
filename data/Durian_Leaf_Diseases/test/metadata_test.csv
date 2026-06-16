@@ -1,5 +1,5 @@
 image_id,file_name,file_path,original_file_name,original_extension,split,label_id,disease_type,verification_status,severity
-DLDD_TEST_000001,DLDD_TEST_000001.jpg,algal/DLDD_TEST_000001.jpg,DLDD_TEST_000001.jpg,.jpg,test,1,algal,verified,3
+DLDD_TEST_000001,DLDD_TEST_000001.jpg,algal/DLDD_TEST_000001.jpg,DLDD_TEST_000001.jpg,.jpg,test,1,algal,verified,2
 DLDD_TEST_000002,DLDD_TEST_000002.jpg,algal/DLDD_TEST_000002.jpg,DLDD_TEST_000002.jpg,.jpg,test,1,algal,verified,2
 DLDD_TEST_000003,DLDD_TEST_000003.jpg,algal/DLDD_TEST_000003.jpg,DLDD_TEST_000003.jpg,.jpg,test,1,algal,verified,1
 DLDD_TEST_000004,DLDD_TEST_000004.jpg,algal/DLDD_TEST_000004.jpg,DLDD_TEST_000004.jpg,.jpg,test,1,algal,verified,2

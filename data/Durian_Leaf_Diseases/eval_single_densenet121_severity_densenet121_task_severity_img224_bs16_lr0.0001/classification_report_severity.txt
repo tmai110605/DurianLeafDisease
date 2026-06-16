@@ -1,0 +1,15 @@
+Model: densenet121
+Task: severity
+Checkpoint: checkpoints/densenet121_task_severity_img224_bs16_lr0.0001/best_densenet121_severity.pth
+
+Severity Classification Report
+              precision    recall  f1-score   support
+
+     healthy     0.8901    0.9401    0.9144       267
+        mild     0.6760    0.6617    0.6688       473
+    moderate     0.4647    0.5516    0.5044       310
+      severe     0.6066    0.2984    0.4000       124
+
+    accuracy                         0.6576      1174
+   macro avg     0.6593    0.6130    0.6219      1174
+weighted avg     0.6616    0.6576    0.6529      1174

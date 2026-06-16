@@ -1,0 +1,16 @@
+Model: densenet121
+Task: disease
+Checkpoint: checkpoints/densenet121_task_disease_img224_bs16_lr0.0001/best_densenet121_disease.pth
+
+Disease Classification Report
+                     precision    recall  f1-score   support
+
+            healthy     0.9250    0.9700    0.9470       267
+              algal     0.8955    0.9381    0.9163       210
+allocaridara_attack     0.9238    0.9557    0.9395       203
+             blight     0.9837    0.9451    0.9640       255
+          phomopsis     0.9315    0.8536    0.8908       239
+
+           accuracy                         0.9327      1174
+          macro avg     0.9319    0.9325    0.9315      1174
+       weighted avg     0.9336    0.9327    0.9325      1174

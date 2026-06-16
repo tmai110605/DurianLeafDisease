@@ -1,0 +1,176 @@
+{
+  "metadata": {
+    "name": "Durian Leaf Weather Risk Knowledge Base",
+    "version": "1.0",
+    "language": "vi",
+    "purpose": "File bổ sung cho 'durian_leaf_case_based_recommendation_kb.json'. Mỗi rule mô tả một điều kiện thời tiết (hiện tại hoặc dự báo vài ngày tới) có thể làm tăng/giảm nguy cơ cho một hoặc nhiều disease_label. Việc kiểm tra điều kiện do CODE thực hiện (so sánh số với threshold), KHÔNG giao cho LLM tự suy đoán, để tránh bịa số liệu.",
+    "id_namespace_note": "evidence_source_ids bắt đầu bằng 'S' tham chiếu tới mục 'sources' trong durian_leaf_case_based_recommendation_kb.json (đã có sẵn, mô tả risk_factors theo từng bệnh). evidence_source_ids bắt đầu bằng 'W' tham chiếu tới mục 'sources' của CHÍNH file này (nguồn tổng quát về quan hệ thời tiết - bệnh hại cây trồng).",
+
+    "forecast_input_schema": {
+      "description": "Cấu trúc dữ liệu thời tiết đầu vào mà engine matching cần có để áp dụng các rule dưới đây. Có thể lấy từ bất kỳ API thời tiết nào, miễn là map đúng các field này.",
+      "current": {
+        "current_temp": "Nhiệt độ hiện tại (°C)",
+        "current_humidity": "Độ ẩm tương đối hiện tại (%)",
+        "current_rain": "Lượng mưa hiện tại/trong giờ gần nhất (mm)"
+      },
+      "daily_forecast": {
+        "description": "Danh sách các ngày dự báo sắp tới (đề xuất 3 ngày), mỗi ngày gồm:",
+        "date": "YYYY-MM-DD",
+        "rain_mm": "Tổng lượng mưa dự báo trong ngày (mm)",
+        "temp_max": "Nhiệt độ tối đa dự báo (°C)",
+        "temp_min": "Nhiệt độ tối thiểu dự báo (°C)",
+        "humidity_max": "Độ ẩm tương đối tối đa dự báo trong ngày (%)"
+      },
+      "derived_fields": {
+        "rain_mm_3day_total": "Tổng rain_mm của 3 ngày dự báo gần nhất, do code tự tính trước khi match rule."
+      }
+    },
+
+    "matching_logic": {
+      "description": "Với mỗi rule: lấy applies_to_diseases, nếu disease_label hiện tại nằm trong danh sách (hoặc danh sách chứa 'all') thì kiểm tra condition. Rule khớp khi điều kiện đúng với số ngày tối thiểu yêu cầu.",
+      "condition_fields": {
+        "type": "'current_value' (so với current_*) | 'daily_forecast_threshold' (so với từng ngày trong daily_forecast) | 'derived_field_threshold' (so với derived_fields)",
+        "field": "Tên field tương ứng trong forecast_input_schema",
+        "operator": ">= | <= | > | < | ==",
+        "value": "Số ngưỡng để so sánh",
+        "window_days": "Chỉ áp dụng cho type='daily_forecast_threshold': số ngày tới cần xét (vd 3)",
+        "min_days_triggered": "Chỉ áp dụng cho type='daily_forecast_threshold': số ngày trong window_days phải thỏa điều kiện để rule được coi là khớp"
+      },
+      "output_usage": "Mỗi rule khớp -> lấy message_vi + risk_level, đưa vào một section riêng trong prompt gửi LLM (vd 'CẢNH BÁO THỜI TIẾT BỔ SUNG'), tách biệt khỏi context case tĩnh. LLM chỉ được diễn giải lại nội dung này bằng tiếng Việt dễ hiểu, không tự thêm số liệu thời tiết khác ngoài dữ liệu được cung cấp."
+    },
+
+    "risk_level_scale": {
+      "monitoring": "Chưa cần thay đổi hành động, chỉ tăng cường theo dõi.",
+      "increased": "Nguy cơ tăng so với bình thường, nên chủ động một số biện pháp phòng ngừa/quản lý sớm hơn.",
+      "high": "Nguy cơ cao, nên ưu tiên kiểm tra/can thiệp sớm và tăng tần suất theo dõi rõ rệt.",
+      "caution_water_stress": "Không liên quan trực tiếp đến bệnh trong KB này, nhưng điều kiện thời tiết có thể làm cây suy yếu, gián tiếp làm tăng mức độ nhạy cảm với sâu bệnh (theo nguyên lý disease triangle)."
+    }
+  },
+
+  "sources": [
+    {
+      "source_id": "W1",
+      "title": "Iowa State University Extension: It Takes Three to Make a Plant Sick (Disease Triangle)",
+      "type": "university_extension_article",
+      "url": "https://www.extension.iastate.edu/news/2007/jan/071001.htm",
+      "supports": [
+        "general principle: environment as condition for plant disease",
+        "host susceptibility under stress"
+      ],
+      "notes": "Mô tả 'disease triangle': bệnh chỉ phát triển khi có đủ cây mẫn cảm + tác nhân gây bệnh + môi trường thuận lợi (thường là ấm và ẩm); cây suy yếu (vd do stress nước/nhiệt) cũng dễ mẫn cảm hơn với sâu bệnh nói chung."
+    },
+    {
+      "source_id": "W2",
+      "title": "ScienceDirect: From triangle to pyramid - host-pathogen-microbiome-environment interplay",
+      "type": "peer_reviewed_review_article",
+      "url": "https://www.sciencedirect.com/science/article/pii/S2590346226001239",
+      "supports": [
+        "humidity threshold and fungal sporulation",
+        "rain and prolonged leaf wetness favor fungal infection"
+      ],
+      "notes": "Dẫn nghiên cứu cho thấy khi độ ẩm tán tăng từ 60% lên 85%, mật độ bào tử nấm (Plasmopara viticola) tăng khoảng 10 lần; nhấn mạnh độ ẩm bề mặt lá kéo dài là yếu tố thúc đẩy nhiễm nấm. Dùng làm cơ sở chung cho ngưỡng độ ẩm cao trong các rule nấm bệnh."
+    },
+    {
+      "source_id": "W3",
+      "title": "Walsh Medical Media: Role of Individual Components of Disease Triangle in Disease Development - A Review",
+      "type": "peer_reviewed_review_article",
+      "url": "https://www.walshmedicalmedia.com/open-access/role-of-individual-components-of-disease-triangle-in-disease-development-a-review-84806.html",
+      "supports": [
+        "rain and spore dispersal/germination",
+        "leaf wetness period and disease severity"
+      ],
+      "notes": "Mô tả vai trò của mưa: hạt mưa giúp giải phóng và phát tán bào tử nấm/vi khuẩn; thời gian lá ướt kéo dài làm tăng mức độ nặng của nhiều bệnh hại lá."
+    }
+  ],
+
+  "weather_rules": [
+    {
+      "rule_id": "WR_RAIN_SPORE_DISPERSAL",
+      "applies_to_diseases": ["algal", "blight", "phomopsis"],
+      "condition": {
+        "type": "daily_forecast_threshold",
+        "field": "rain_mm",
+        "operator": ">=",
+        "value": 10,
+        "window_days": 3,
+        "min_days_triggered": 1
+      },
+      "risk_level": "increased",
+      "message_vi": "Dự báo có mưa đáng kể trong vài ngày tới. Mưa giúp phát tán và tạo điều kiện nảy mầm cho bào tử nấm gây bệnh đốm lá/cháy lá. Nên kiểm tra lá sau mỗi đợt mưa, tránh cắt tỉa hoặc di chuyển trong tán cây khi lá còn ướt để hạn chế lây lan, và đảm bảo vườn thoát nước tốt.",
+      "evidence_source_ids": ["S3", "S7", "S12", "S14", "S1", "S16", "W3"]
+    },
+    {
+      "rule_id": "WR_HIGH_HUMIDITY_FUNGAL",
+      "applies_to_diseases": ["algal", "blight", "phomopsis"],
+      "condition": {
+        "type": "daily_forecast_threshold",
+        "field": "humidity_max",
+        "operator": ">=",
+        "value": 80,
+        "window_days": 3,
+        "min_days_triggered": 2
+      },
+      "risk_level": "increased",
+      "message_vi": "Độ ẩm dự báo duy trì ở mức cao trong vài ngày tới, là điều kiện thuận lợi cho nấm bệnh đốm lá/cháy lá phát sinh hoặc lan rộng. Nên tăng tần suất kiểm tra tán lá (đặc biệt mặt dưới lá), cải thiện thông thoáng tán, tránh tưới làm ướt lá vào chiều/tối.",
+      "evidence_source_ids": ["S4", "S5", "S6", "S7", "S13", "S14", "S15", "S16", "W1", "W2"]
+    },
+    {
+      "rule_id": "WR_PROLONGED_WET_SEVERE",
+      "applies_to_diseases": ["algal", "blight", "phomopsis"],
+      "condition": {
+        "type": "derived_field_threshold",
+        "field": "rain_mm_3day_total",
+        "operator": ">=",
+        "value": 30
+      },
+      "risk_level": "high",
+      "message_vi": "Tổng lượng mưa dự báo trong 3 ngày tới khá lớn, kết hợp với độ ẩm cao kéo dài có thể làm bệnh đốm lá/cháy lá lan nhanh hơn bình thường. Nên kiểm tra tán lá hàng ngày trong giai đoạn này, ưu tiên xử lý ngay các điểm thoát nước kém, và ghi nhận sớm nếu vết bệnh có dấu hiệu lan rộng để báo cán bộ kỹ thuật.",
+      "evidence_source_ids": ["S12", "S14", "W2", "W3"]
+    },
+    {
+      "rule_id": "WR_PSYLLID_WARM_CONDITIONS",
+      "applies_to_diseases": ["allocaridara_attack"],
+      "condition": {
+        "type": "daily_forecast_threshold",
+        "field": "temp_min",
+        "operator": ">=",
+        "value": 24,
+        "window_days": 3,
+        "min_days_triggered": 2
+      },
+      "risk_level": "increased",
+      "message_vi": "Nhiệt độ ban đêm dự báo duy trì ở mức ấm trong vài ngày tới, là điều kiện thuận lợi cho quần thể durian psyllid phát triển, đặc biệt nếu cây đang ra đọt non. Nên tăng tần suất kiểm tra đọt non và mặt dưới lá trong giai đoạn này.",
+      "evidence_source_ids": ["S9", "S11", "W1"]
+    },
+    {
+      "rule_id": "WR_DRY_HOT_WATER_STRESS",
+      "applies_to_diseases": ["all"],
+      "condition": {
+        "type": "daily_forecast_threshold",
+        "field": "temp_max",
+        "operator": ">=",
+        "value": 35,
+        "window_days": 3,
+        "min_days_triggered": 2
+      },
+      "risk_level": "caution_water_stress",
+      "message_vi": "Dự báo nắng nóng kéo dài trong vài ngày tới. Nắng nóng không trực tiếp gây ra các bệnh trong cơ sở dữ liệu này, nhưng có thể khiến cây bị stress nước, suy yếu và dễ mẫn cảm hơn với sâu bệnh nói chung. Nên đảm bảo tưới nước đầy đủ và đều, tránh để cây thiếu nước kéo dài trong giai đoạn này.",
+      "evidence_source_ids": ["W1"]
+    },
+    {
+      "rule_id": "WR_HEALTHY_PREVENTIVE_AFTER_RAIN",
+      "applies_to_diseases": ["healthy"],
+      "condition": {
+        "type": "daily_forecast_threshold",
+        "field": "rain_mm",
+        "operator": ">=",
+        "value": 10,
+        "window_days": 3,
+        "min_days_triggered": 1
+      },
+      "risk_level": "monitoring",
+      "message_vi": "Lá hiện đang khỏe, nhưng dự báo có mưa trong vài ngày tới - đây là điều kiện thuận lợi cho các bệnh đốm lá/cháy lá và sâu hại trên đọt non phát sinh. Nên chủ động kiểm tra lá non và mặt dưới lá sau mỗi đợt mưa trong giai đoạn này để phát hiện sớm dấu hiệu bất thường.",
+      "evidence_source_ids": ["W1", "W2", "W3"]
+    }
+  ]
+}

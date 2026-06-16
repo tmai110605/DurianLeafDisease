@@ -1,0 +1,19 @@
+{
+    "model": "ticknet_large",
+    "task": "severity",
+    "checkpoint": "checkpoints/ticknet_large_task_severity_img224_bs16_lr0.0001/best_ticknet_large_severity.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "accuracy": 0.6780238500851788,
+    "precision_macro": 0.6444112676091014,
+    "recall_macro": 0.6373015272459586,
+    "f1_macro": 0.6387950484676023,
+    "total_params": 3422166,
+    "trainable_params": 3422166,
+    "flops": 1293925376.0,
+    "flops_readable": "1.294G",
+    "params_readable": "3.422M",
+    "epoch": 45,
+    "val_loss": 0.7135725225946811,
+    "val_acc": 0.694017094017094
+}

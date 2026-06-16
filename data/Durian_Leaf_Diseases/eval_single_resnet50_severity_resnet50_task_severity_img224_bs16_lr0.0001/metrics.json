@@ -1,0 +1,19 @@
+{
+    "model": "resnet50",
+    "task": "severity",
+    "checkpoint": "checkpoints/resnet50_task_severity_img224_bs16_lr0.0001/best_resnet50_severity.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "accuracy": 0.7018739352640545,
+    "precision_macro": 0.6811464183471518,
+    "recall_macro": 0.6531092681239768,
+    "f1_macro": 0.6578388102943613,
+    "total_params": 24559172,
+    "trainable_params": 24559172,
+    "flops": 4132745216.0,
+    "flops_readable": "4.133G",
+    "params_readable": "24.559M",
+    "epoch": 31,
+    "val_loss": 0.66863664743992,
+    "val_acc": 0.7034188034188035
+}

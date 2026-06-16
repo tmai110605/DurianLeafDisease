@@ -1,0 +1,16 @@
+Model: ticknet_large
+Task: disease
+Checkpoint: checkpoints/ticknet_large_task_disease_img224_bs16_lr0.0001/best_ticknet_large_disease.pth
+
+Disease Classification Report
+                     precision    recall  f1-score   support
+
+            healthy     0.9594    0.9738    0.9665       267
+              algal     0.9227    0.9095    0.9161       210
+allocaridara_attack     0.9175    0.9310    0.9242       203
+             blight     0.9522    0.9373    0.9447       255
+          phomopsis     0.9205    0.9205    0.9205       239
+
+           accuracy                         0.9361      1174
+          macro avg     0.9345    0.9344    0.9344      1174
+       weighted avg     0.9361    0.9361    0.9361      1174

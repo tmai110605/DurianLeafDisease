@@ -1,0 +1,15 @@
+Model: ticknet_large
+Task: severity
+Checkpoint: checkpoints/ticknet_large_task_severity_img224_bs16_lr0.0001/best_ticknet_large_severity.pth
+
+Severity Classification Report
+              precision    recall  f1-score   support
+
+     healthy     0.9088    0.9700    0.9384       267
+        mild     0.6896    0.7421    0.7149       473
+    moderate     0.4893    0.4419    0.4644       310
+      severe     0.4900    0.3952    0.4375       124
+
+    accuracy                         0.6780      1174
+   macro avg     0.6444    0.6373    0.6388      1174
+weighted avg     0.6655    0.6780    0.6703      1174

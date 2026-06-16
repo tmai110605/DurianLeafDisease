@@ -1,0 +1,19 @@
+{
+    "model": "ticknet_large",
+    "task": "disease",
+    "checkpoint": "checkpoints/ticknet_large_task_disease_img224_bs16_lr0.0001/best_ticknet_large_disease.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "accuracy": 0.9361158432708688,
+    "precision_macro": 0.9344567926741826,
+    "recall_macro": 0.9344196115658008,
+    "f1_macro": 0.9343962799712419,
+    "total_params": 3422679,
+    "trainable_params": 3422679,
+    "flops": 1293925888.0,
+    "flops_readable": "1.294G",
+    "params_readable": "3.423M",
+    "epoch": 48,
+    "val_loss": 0.23594317879750687,
+    "val_acc": 0.923931623931624
+}

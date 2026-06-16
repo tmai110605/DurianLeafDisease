@@ -1,0 +1,19 @@
+{
+    "model": "mobilenetv2",
+    "task": "disease",
+    "checkpoint": "checkpoints/mobilenetv2_task_disease_img224_bs16_lr0.0001/best_mobilenetv2_disease.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "accuracy": 0.8824531516183987,
+    "precision_macro": 0.8831418023726416,
+    "recall_macro": 0.8775729452140031,
+    "f1_macro": 0.8793846087950012,
+    "total_params": 2928230,
+    "trainable_params": 2928230,
+    "flops": 329290336.0,
+    "flops_readable": "329.290M",
+    "params_readable": "2.928M",
+    "epoch": 60,
+    "val_loss": 0.319092848072322,
+    "val_acc": 0.8905982905982905
+}

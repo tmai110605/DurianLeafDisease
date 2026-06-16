@@ -1,0 +1,19 @@
+{
+    "model": "densenet121",
+    "task": "disease",
+    "checkpoint": "checkpoints/densenet121_task_disease_img224_bs16_lr0.0001/best_densenet121_disease.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "accuracy": 0.9327086882453152,
+    "precision_macro": 0.9318888775933786,
+    "recall_macro": 0.9324904480961271,
+    "f1_macro": 0.9315119246114341,
+    "total_params": 7481221,
+    "trainable_params": 7481221,
+    "flops": 2896561152.0,
+    "flops_readable": "2.897G",
+    "params_readable": "7.481M",
+    "epoch": 57,
+    "val_loss": 0.1767964800035195,
+    "val_acc": 0.9461538461538461
+}
