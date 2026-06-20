@@ -343,7 +343,14 @@ def get_recommendation(
             "recommendation_text": None,
         }
 
-    source_ids = case["llm_context_vi"]["context"].get("nguon_minh_chung", [])
+    context = case["llm_context_vi"]["context"]
+    source_ids = list(context.get("nguon_minh_chung", []))
+    thoi_tiet = context.get("thoi_tiet", {})
+    if isinstance(thoi_tiet, dict):
+        weather_source_ids = thoi_tiet.get("nguon_minh_chung", [])
+        for wsid in weather_source_ids:
+            if wsid not in source_ids:
+                source_ids.append(wsid)
     source_titles = kb.get_source_titles(source_ids)
 
     prompt = build_prompt(case, source_titles, weather_data=weather_data, location=location)
