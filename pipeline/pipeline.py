@@ -1,6 +1,11 @@
 import os
 import sys
 
+# Add project root to sys.path to enable imports of models and pipeline
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
+
 # Force UTF-8 encoding for Windows console to support Vietnamese characters print
 if sys.platform.startswith("win"):
     try:
@@ -389,7 +394,7 @@ def run_pipeline(
 
         # ── Resize CAM → ảnh gốc (cho 2D overlay) ─
         cam_2d = cv2.resize(cam, (img_size, img_size))
-        cam_2d = (cam_2d - cam_2d.min()) / (cam_2d.max() + 1e-8)
+        cam_2d = (cam_2d - cam_2d.min()) / (cam_2d.max() - cam_2d.min() + 1e-8)
 
         # ── Resize CAM → depth size (cho 3D) ───────
         cam_3d = cv2.resize(cam, (new_w, new_h))
