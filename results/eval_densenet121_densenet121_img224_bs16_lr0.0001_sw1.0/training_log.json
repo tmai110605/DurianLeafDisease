@@ -1,0 +1,560 @@
+{
+    "run_name": "densenet121_img224_bs16_lr0.0001_sw1.0",
+    "model": "densenet121",
+    "image_size": 224,
+    "batch_size": 16,
+    "epochs": 60,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "dropout": 0.2,
+    "severity_loss_weight": 1.0,
+    "use_severity_weight": false,
+    "total_params": 7483273,
+    "trainable_params": 7483273,
+    "flops": 2896563200,
+    "flops_readable": "2.897G",
+    "params_readable": "7.483M",
+    "epochs_log": [
+        {
+            "epoch": 1,
+            "train_loss": 2.649332203137118,
+            "train_disease_acc": 0.3781089193825043,
+            "train_severity_acc": 0.40834048027444253,
+            "val_loss": 2.62278806898329,
+            "val_disease_acc": 0.441025641025641,
+            "val_severity_acc": 0.45897435897435895
+        },
+        {
+            "epoch": 2,
+            "train_loss": 2.4354689632435402,
+            "train_disease_acc": 0.4684819897084048,
+            "train_severity_acc": 0.45004288164665524,
+            "val_loss": 2.3716956032647025,
+            "val_disease_acc": 0.48717948717948717,
+            "val_severity_acc": 0.4811965811965812
+        },
+        {
+            "epoch": 3,
+            "train_loss": 2.3038592440799825,
+            "train_disease_acc": 0.5233704974271012,
+            "train_severity_acc": 0.4705188679245283,
+            "val_loss": 2.1591962390475805,
+            "val_disease_acc": 0.5837606837606838,
+            "val_severity_acc": 0.49743589743589745
+        },
+        {
+            "epoch": 4,
+            "train_loss": 2.202790053181133,
+            "train_disease_acc": 0.5573542024013722,
+            "train_severity_acc": 0.4889579759862779,
+            "val_loss": 2.053996246900314,
+            "val_disease_acc": 0.6264957264957265,
+            "val_severity_acc": 0.48376068376068376
+        },
+        {
+            "epoch": 5,
+            "train_loss": 2.1046497065248047,
+            "train_disease_acc": 0.5913379073756432,
+            "train_severity_acc": 0.5019296740994854,
+            "val_loss": 2.0085534299540724,
+            "val_disease_acc": 0.6376068376068376,
+            "val_severity_acc": 0.523931623931624
+        },
+        {
+            "epoch": 6,
+            "train_loss": 1.9823152528209915,
+            "train_disease_acc": 0.6272512864493996,
+            "train_severity_acc": 0.5245497427101201,
+            "val_loss": 1.7372844526910374,
+            "val_disease_acc": 0.7239316239316239,
+            "val_severity_acc": 0.5341880341880342
+        },
+        {
+            "epoch": 7,
+            "train_loss": 1.8251856864009877,
+            "train_disease_acc": 0.6783876500857633,
+            "train_severity_acc": 0.5548885077186964,
+            "val_loss": 1.895752510861454,
+            "val_disease_acc": 0.6555555555555556,
+            "val_severity_acc": 0.5769230769230769
+        },
+        {
+            "epoch": 8,
+            "train_loss": 1.6613606169538677,
+            "train_disease_acc": 0.7179459691252144,
+            "train_severity_acc": 0.5899442538593482,
+            "val_loss": 1.525044948219234,
+            "val_disease_acc": 0.7623931623931623,
+            "val_severity_acc": 0.5623931623931624
+        },
+        {
+            "epoch": 9,
+            "train_loss": 1.5587917276966428,
+            "train_disease_acc": 0.7414236706689536,
+            "train_severity_acc": 0.5975557461406518,
+            "val_loss": 1.4753677741075173,
+            "val_disease_acc": 0.7863247863247863,
+            "val_severity_acc": 0.6316239316239316
+        },
+        {
+            "epoch": 10,
+            "train_loss": 1.4580770264767864,
+            "train_disease_acc": 0.7683319039451115,
+            "train_severity_acc": 0.6187821612349914,
+            "val_loss": 1.2632395565000354,
+            "val_disease_acc": 0.8153846153846154,
+            "val_severity_acc": 0.6538461538461539
+        },
+        {
+            "epoch": 11,
+            "train_loss": 1.3687656774324577,
+            "train_disease_acc": 0.7914879931389366,
+            "train_severity_acc": 0.6344339622641509,
+            "val_loss": 1.2603439482868226,
+            "val_disease_acc": 0.8333333333333334,
+            "val_severity_acc": 0.652991452991453
+        },
+        {
+            "epoch": 12,
+            "train_loss": 1.3151841850673356,
+            "train_disease_acc": 0.8063893653516295,
+            "train_severity_acc": 0.6451543739279588,
+            "val_loss": 1.2526517138521895,
+            "val_disease_acc": 0.8222222222222222,
+            "val_severity_acc": 0.6735042735042736
+        },
+        {
+            "epoch": 13,
+            "train_loss": 1.2631047727926723,
+            "train_disease_acc": 0.8243996569468267,
+            "train_severity_acc": 0.6477272727272727,
+            "val_loss": 1.1437984140510233,
+            "val_disease_acc": 0.8632478632478633,
+            "val_severity_acc": 0.6658119658119658
+        },
+        {
+            "epoch": 14,
+            "train_loss": 1.1971240345241685,
+            "train_disease_acc": 0.8375857632933105,
+            "train_severity_acc": 0.6614493996569468,
+            "val_loss": 1.1991314466437724,
+            "val_disease_acc": 0.841025641025641,
+            "val_severity_acc": 0.6316239316239316
+        },
+        {
+            "epoch": 15,
+            "train_loss": 1.1629499227677569,
+            "train_disease_acc": 0.8448756432246999,
+            "train_severity_acc": 0.6714193825042881,
+            "val_loss": 1.2088993702179347,
+            "val_disease_acc": 0.8452991452991453,
+            "val_severity_acc": 0.6427350427350428
+        },
+        {
+            "epoch": 16,
+            "train_loss": 1.1322943922994886,
+            "train_disease_acc": 0.8501286449399656,
+            "train_severity_acc": 0.673992281303602,
+            "val_loss": 1.1136118605605558,
+            "val_disease_acc": 0.8623931623931624,
+            "val_severity_acc": 0.6735042735042736
+        },
+        {
+            "epoch": 17,
+            "train_loss": 1.079984550461761,
+            "train_disease_acc": 0.8624571183533448,
+            "train_severity_acc": 0.6809605488850772,
+            "val_loss": 1.1304390224126668,
+            "val_disease_acc": 0.8606837606837607,
+            "val_severity_acc": 0.6478632478632479
+        },
+        {
+            "epoch": 18,
+            "train_loss": 1.0649832169146727,
+            "train_disease_acc": 0.8673885077186964,
+            "train_severity_acc": 0.6809605488850772,
+            "val_loss": 1.0554772457505903,
+            "val_disease_acc": 0.8914529914529915,
+            "val_severity_acc": 0.6743589743589744
+        },
+        {
+            "epoch": 19,
+            "train_loss": 1.0285882737174452,
+            "train_disease_acc": 0.8744639794168096,
+            "train_severity_acc": 0.6910377358490566,
+            "val_loss": 1.0363420536120733,
+            "val_disease_acc": 0.8948717948717949,
+            "val_severity_acc": 0.6333333333333333
+        },
+        {
+            "epoch": 20,
+            "train_loss": 0.9869527224815525,
+            "train_disease_acc": 0.8867924528301887,
+            "train_severity_acc": 0.6939322469982847,
+            "val_loss": 1.081746178916377,
+            "val_disease_acc": 0.8786324786324786,
+            "val_severity_acc": 0.6264957264957265
+        },
+        {
+            "epoch": 21,
+            "train_loss": 0.9638036896393188,
+            "train_disease_acc": 0.8933319039451115,
+            "train_severity_acc": 0.6999356775300172,
+            "val_loss": 0.9863418203706925,
+            "val_disease_acc": 0.8948717948717949,
+            "val_severity_acc": 0.6794871794871795
+        },
+        {
+            "epoch": 22,
+            "train_loss": 0.9393154067302036,
+            "train_disease_acc": 0.8930102915951973,
+            "train_severity_acc": 0.7099056603773585,
+            "val_loss": 1.066068446954601,
+            "val_disease_acc": 0.8846153846153846,
+            "val_severity_acc": 0.6555555555555556
+        },
+        {
+            "epoch": 23,
+            "train_loss": 0.9156563492622833,
+            "train_disease_acc": 0.8991209262435678,
+            "train_severity_acc": 0.7118353344768439,
+            "val_loss": 1.016332937968083,
+            "val_disease_acc": 0.9,
+            "val_severity_acc": 0.6435897435897436
+        },
+        {
+            "epoch": 24,
+            "train_loss": 0.9071786700145662,
+            "train_disease_acc": 0.9054459691252144,
+            "train_severity_acc": 0.7124785591766724,
+            "val_loss": 0.9898251899287231,
+            "val_disease_acc": 0.9,
+            "val_severity_acc": 0.6692307692307692
+        },
+        {
+            "epoch": 25,
+            "train_loss": 0.8681249299037109,
+            "train_disease_acc": 0.9085548885077187,
+            "train_severity_acc": 0.7244854202401372,
+            "val_loss": 1.0031730839584627,
+            "val_disease_acc": 0.9145299145299145,
+            "val_severity_acc": 0.6743589743589744
+        },
+        {
+            "epoch": 26,
+            "train_loss": 0.8773298803365456,
+            "train_disease_acc": 0.9061963979416809,
+            "train_severity_acc": 0.7244854202401372,
+            "val_loss": 0.9697857093861979,
+            "val_disease_acc": 0.9188034188034188,
+            "val_severity_acc": 0.676923076923077
+        },
+        {
+            "epoch": 27,
+            "train_loss": 0.8288821514127185,
+            "train_disease_acc": 0.91573756432247,
+            "train_severity_acc": 0.7329545454545454,
+            "val_loss": 1.0126023841719343,
+            "val_disease_acc": 0.9145299145299145,
+            "val_severity_acc": 0.658974358974359
+        },
+        {
+            "epoch": 28,
+            "train_loss": 0.8374617348711036,
+            "train_disease_acc": 0.9148799313893653,
+            "train_severity_acc": 0.7317753001715266,
+            "val_loss": 0.9928300530291521,
+            "val_disease_acc": 0.9136752136752136,
+            "val_severity_acc": 0.6923076923076923
+        },
+        {
+            "epoch": 29,
+            "train_loss": 0.7889254063010012,
+            "train_disease_acc": 0.9242066895368782,
+            "train_severity_acc": 0.7368138936535163,
+            "val_loss": 0.9871564054336304,
+            "val_disease_acc": 0.9076923076923077,
+            "val_severity_acc": 0.676923076923077
+        },
+        {
+            "epoch": 30,
+            "train_loss": 0.7898999557895889,
+            "train_disease_acc": 0.9267795883361921,
+            "train_severity_acc": 0.7421740994854202,
+            "val_loss": 0.9839124510391082,
+            "val_disease_acc": 0.9094017094017094,
+            "val_severity_acc": 0.6564102564102564
+        },
+        {
+            "epoch": 31,
+            "train_loss": 0.7773248600305456,
+            "train_disease_acc": 0.9253859348198971,
+            "train_severity_acc": 0.7468910806174958,
+            "val_loss": 0.9141195930349522,
+            "val_disease_acc": 0.9333333333333333,
+            "val_severity_acc": 0.7034188034188035
+        },
+        {
+            "epoch": 32,
+            "train_loss": 0.752513110535427,
+            "train_disease_acc": 0.9319253859348199,
+            "train_severity_acc": 0.7522512864493996,
+            "val_loss": 0.9219930676313547,
+            "val_disease_acc": 0.9282051282051282,
+            "val_severity_acc": 0.6871794871794872
+        },
+        {
+            "epoch": 33,
+            "train_loss": 0.7577454970692689,
+            "train_disease_acc": 0.9303173241852487,
+            "train_severity_acc": 0.7486063464837049,
+            "val_loss": 1.0366173835837433,
+            "val_disease_acc": 0.911965811965812,
+            "val_severity_acc": 0.6675213675213675
+        },
+        {
+            "epoch": 34,
+            "train_loss": 0.7135281496861786,
+            "train_disease_acc": 0.9355703259005146,
+            "train_severity_acc": 0.7586835334476844,
+            "val_loss": 0.9158074440657455,
+            "val_disease_acc": 0.9307692307692308,
+            "val_severity_acc": 0.6820512820512821
+        },
+        {
+            "epoch": 35,
+            "train_loss": 0.7022513997186723,
+            "train_disease_acc": 0.9364279588336192,
+            "train_severity_acc": 0.7670454545454546,
+            "val_loss": 0.9153677245410972,
+            "val_disease_acc": 0.9264957264957265,
+            "val_severity_acc": 0.694017094017094
+        },
+        {
+            "epoch": 36,
+            "train_loss": 0.7023411002617144,
+            "train_disease_acc": 0.9381432246998285,
+            "train_severity_acc": 0.7661878216123499,
+            "val_loss": 1.1280748789604658,
+            "val_disease_acc": 0.9111111111111111,
+            "val_severity_acc": 0.6094017094017095
+        },
+        {
+            "epoch": 37,
+            "train_loss": 0.6941754188433316,
+            "train_disease_acc": 0.9375,
+            "train_severity_acc": 0.7656518010291595,
+            "val_loss": 0.9910333557866323,
+            "val_disease_acc": 0.9273504273504274,
+            "val_severity_acc": 0.6888888888888889
+        },
+        {
+            "epoch": 38,
+            "train_loss": 0.6689163836208052,
+            "train_disease_acc": 0.9425385934819898,
+            "train_severity_acc": 0.7760506003430532,
+            "val_loss": 0.9400752257269163,
+            "val_disease_acc": 0.9333333333333333,
+            "val_severity_acc": 0.6871794871794872
+        },
+        {
+            "epoch": 39,
+            "train_loss": 0.644314182177825,
+            "train_disease_acc": 0.9473627787307033,
+            "train_severity_acc": 0.7775514579759862,
+            "val_loss": 0.9634560357938465,
+            "val_disease_acc": 0.917094017094017,
+            "val_severity_acc": 0.6735042735042736
+        },
+        {
+            "epoch": 40,
+            "train_loss": 0.6289758414387907,
+            "train_disease_acc": 0.9500428816466552,
+            "train_severity_acc": 0.7875214408233276,
+            "val_loss": 0.9437393486595307,
+            "val_disease_acc": 0.9333333333333333,
+            "val_severity_acc": 0.6794871794871795
+        },
+        {
+            "epoch": 41,
+            "train_loss": 0.6278489072061116,
+            "train_disease_acc": 0.9513293310463122,
+            "train_severity_acc": 0.7840909090909091,
+            "val_loss": 1.0100408556496996,
+            "val_disease_acc": 0.9179487179487179,
+            "val_severity_acc": 0.6829059829059829
+        },
+        {
+            "epoch": 42,
+            "train_loss": 0.6234596509160554,
+            "train_disease_acc": 0.9495068610634648,
+            "train_severity_acc": 0.7855917667238422,
+            "val_loss": 0.9528028545216617,
+            "val_disease_acc": 0.9247863247863248,
+            "val_severity_acc": 0.705982905982906
+        },
+        {
+            "epoch": 43,
+            "train_loss": 0.5902296995319183,
+            "train_disease_acc": 0.9586192109777015,
+            "train_severity_acc": 0.7950257289879932,
+            "val_loss": 0.9562687680825719,
+            "val_disease_acc": 0.9376068376068376,
+            "val_severity_acc": 0.6683760683760683
+        },
+        {
+            "epoch": 44,
+            "train_loss": 0.601102496195412,
+            "train_disease_acc": 0.9543310463121784,
+            "train_severity_acc": 0.7984562607204116,
+            "val_loss": 0.941770053935898,
+            "val_disease_acc": 0.9418803418803419,
+            "val_severity_acc": 0.6957264957264957
+        },
+        {
+            "epoch": 45,
+            "train_loss": 0.5784722251712151,
+            "train_disease_acc": 0.9552958833619211,
+            "train_severity_acc": 0.8025300171526587,
+            "val_loss": 0.905461465038009,
+            "val_disease_acc": 0.935042735042735,
+            "val_severity_acc": 0.7042735042735043
+        },
+        {
+            "epoch": 46,
+            "train_loss": 0.5673291926267421,
+            "train_disease_acc": 0.9571183533447685,
+            "train_severity_acc": 0.8010291595197255,
+            "val_loss": 1.014970930147534,
+            "val_disease_acc": 0.9324786324786325,
+            "val_severity_acc": 0.6786324786324787
+        },
+        {
+            "epoch": 47,
+            "train_loss": 0.5592783215371046,
+            "train_disease_acc": 0.9540094339622641,
+            "train_severity_acc": 0.8215051457975986,
+            "val_loss": 1.084477928083024,
+            "val_disease_acc": 0.9376068376068376,
+            "val_severity_acc": 0.6504273504273504
+        },
+        {
+            "epoch": 48,
+            "train_loss": 0.5540055083318599,
+            "train_disease_acc": 0.9581903945111492,
+            "train_severity_acc": 0.8162521440823327,
+            "val_loss": 1.08085152031217,
+            "val_disease_acc": 0.9290598290598291,
+            "val_severity_acc": 0.6487179487179487
+        },
+        {
+            "epoch": 49,
+            "train_loss": 0.5496762298418154,
+            "train_disease_acc": 0.9557246998284734,
+            "train_severity_acc": 0.8127144082332761,
+            "val_loss": 1.166466188055073,
+            "val_disease_acc": 0.9290598290598291,
+            "val_severity_acc": 0.6615384615384615
+        },
+        {
+            "epoch": 50,
+            "train_loss": 0.5301953112358294,
+            "train_disease_acc": 0.9623713550600344,
+            "train_severity_acc": 0.8181818181818182,
+            "val_loss": 0.9940888396590902,
+            "val_disease_acc": 0.9376068376068376,
+            "val_severity_acc": 0.694017094017094
+        },
+        {
+            "epoch": 51,
+            "train_loss": 0.510069750850033,
+            "train_disease_acc": 0.9633361921097771,
+            "train_severity_acc": 0.8222555746140652,
+            "val_loss": 1.073217959829624,
+            "val_disease_acc": 0.9358974358974359,
+            "val_severity_acc": 0.6598290598290598
+        },
+        {
+            "epoch": 52,
+            "train_loss": 0.5096262347841345,
+            "train_disease_acc": 0.9639794168096055,
+            "train_severity_acc": 0.8241852487135506,
+            "val_loss": 1.0382821474272088,
+            "val_disease_acc": 0.9452991452991453,
+            "val_severity_acc": 0.6683760683760683
+        },
+        {
+            "epoch": 53,
+            "train_loss": 0.48895481282503284,
+            "train_disease_acc": 0.9663379073756432,
+            "train_severity_acc": 0.8325471698113207,
+            "val_loss": 1.1473264215346903,
+            "val_disease_acc": 0.9299145299145299,
+            "val_severity_acc": 0.6555555555555556
+        },
+        {
+            "epoch": 54,
+            "train_loss": 0.5200413731573785,
+            "train_disease_acc": 0.9629073756432247,
+            "train_severity_acc": 0.8241852487135506,
+            "val_loss": 0.9674581788429537,
+            "val_disease_acc": 0.9376068376068376,
+            "val_severity_acc": 0.67008547008547
+        },
+        {
+            "epoch": 55,
+            "train_loss": 0.4617015648102883,
+            "train_disease_acc": 0.9715909090909091,
+            "train_severity_acc": 0.8406946826758147,
+            "val_loss": 1.0767661411729124,
+            "val_disease_acc": 0.9401709401709402,
+            "val_severity_acc": 0.6829059829059829
+        },
+        {
+            "epoch": 56,
+            "train_loss": 0.49685189570100596,
+            "train_disease_acc": 0.9637650085763293,
+            "train_severity_acc": 0.828795025728988,
+            "val_loss": 1.0403410400259985,
+            "val_disease_acc": 0.9290598290598291,
+            "val_severity_acc": 0.6760683760683761
+        },
+        {
+            "epoch": 57,
+            "train_loss": 0.44946940474557223,
+            "train_disease_acc": 0.9721269296740995,
+            "train_severity_acc": 0.8458404802744426,
+            "val_loss": 1.1463535143492314,
+            "val_disease_acc": 0.9376068376068376,
+            "val_severity_acc": 0.6606837606837607
+        },
+        {
+            "epoch": 58,
+            "train_loss": 0.4448426771480878,
+            "train_disease_acc": 0.9704116638078902,
+            "train_severity_acc": 0.8470197255574614,
+            "val_loss": 0.9550087600111432,
+            "val_disease_acc": 0.947008547008547,
+            "val_severity_acc": 0.6914529914529914
+        },
+        {
+            "epoch": 59,
+            "train_loss": 0.4507246171835152,
+            "train_disease_acc": 0.9676243567753001,
+            "train_severity_acc": 0.8496998284734134,
+            "val_loss": 0.9864648047778914,
+            "val_disease_acc": 0.9555555555555556,
+            "val_severity_acc": 0.6786324786324787
+        },
+        {
+            "epoch": 60,
+            "train_loss": 0.4621428568331496,
+            "train_disease_acc": 0.9639794168096055,
+            "train_severity_acc": 0.8495926243567753,
+            "val_loss": 1.0931967383736156,
+            "val_disease_acc": 0.9333333333333333,
+            "val_severity_acc": 0.6777777777777778
+        }
+    ],
+    "total_training_time_seconds": 13841.43574976921
+}

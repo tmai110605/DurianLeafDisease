@@ -1,0 +1,16 @@
+Model: mobilenetv3_small
+Task: disease
+Checkpoint: /home/thaimq/DurianLeafProject/checkpoints/mobilenetv3_small_task_disease_img224_bs16_lr0.0001/best_mobilenetv3_small_disease.pth
+
+Disease Classification Report
+                     precision    recall  f1-score   support
+
+            healthy     0.7993    0.8352    0.8168       267
+              algal     0.8457    0.7571    0.7990       210
+allocaridara_attack     0.7931    0.7931    0.7931       203
+             blight     0.8561    0.8863    0.8709       255
+          phomopsis     0.7083    0.7113    0.7098       239
+
+           accuracy                         0.7998      1174
+          macro avg     0.8005    0.7966    0.7979      1174
+       weighted avg     0.8003    0.7998    0.7995      1174

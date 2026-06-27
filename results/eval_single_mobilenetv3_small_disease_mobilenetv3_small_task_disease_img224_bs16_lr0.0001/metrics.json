@@ -1,0 +1,19 @@
+{
+    "model": "mobilenetv3_small",
+    "task": "disease",
+    "checkpoint": "/home/thaimq/DurianLeafProject/checkpoints/mobilenetv3_small_task_disease_img224_bs16_lr0.0001/best_mobilenetv3_small_disease.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "accuracy": 0.7998296422487223,
+    "precision_macro": 0.8005050445285458,
+    "recall_macro": 0.7966047757723422,
+    "f1_macro": 0.7979331872456286,
+    "total_params": 1517363,
+    "trainable_params": 1517363,
+    "flops": 61165792.0,
+    "flops_readable": "61.166M",
+    "params_readable": "1.517M",
+    "epoch": 59,
+    "val_loss": 0.5093498630910858,
+    "val_acc": 0.823076923076923
+}

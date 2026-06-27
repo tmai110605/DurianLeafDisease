@@ -1,5 +1,5 @@
 Model: resnet50
-Checkpoint: checkpoints/resnet50_img224_bs16_lr0.0001_sw1.0/best_resnet50_multitask.pth
+Checkpoint: /home/thaimq/DurianLeafProject/checkpoints/resnet50_img224_bs16_lr0.0001_sw1.0/best_resnet50_multitask.pth
 
 Disease Classification Report
                      precision    recall  f1-score   support
@@ -20,9 +20,9 @@ Severity Classification Report
 
      healthy     0.9286    0.9738    0.9506       267
         mild     0.7527    0.7336    0.7430       473
-    moderate     0.5166    0.6032    0.5565       310
-      severe     0.6620    0.3790    0.4821       124
+    moderate     0.5193    0.6045    0.5587       311
+      severe     0.6620    0.3821    0.4845       123
 
-    accuracy                         0.7164      1174
-   macro avg     0.7150    0.6724    0.6831      1174
-weighted avg     0.7208    0.7164    0.7134      1174
+    accuracy                         0.7172      1174
+   macro avg     0.7156    0.6735    0.6842      1174
+weighted avg     0.7214    0.7172    0.7143      1174

@@ -464,7 +464,7 @@ if __name__ == "__main__":
     os.chdir(_PROJECT_ROOT)
 
     IMAGE_PATH      = r"data\Durian_Leaf_Diseases\test\algal\DLDD_TEST_000006.jpg"
-    CHECKPOINT_PATH = r"checkpoints\v2batch16_best\best_mobilenetv3_multitask.pth"
+    CHECKPOINT_PATH = r"checkpoints\v2batch16_best\best_mobilenetv2_multitask.pth"
 
     result = run_pipeline(
         image_path=IMAGE_PATH,

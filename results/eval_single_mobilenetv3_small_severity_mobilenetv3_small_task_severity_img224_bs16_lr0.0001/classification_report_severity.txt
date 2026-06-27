@@ -1,0 +1,15 @@
+Model: mobilenetv3_small
+Task: severity
+Checkpoint: /home/thaimq/DurianLeafProject/checkpoints/mobilenetv3_small_task_severity_img224_bs16_lr0.0001/best_mobilenetv3_small_severity.pth
+
+Severity Classification Report
+              precision    recall  f1-score   support
+
+     healthy     0.7391    0.8914    0.8081       267
+        mild     0.6203    0.6321    0.6262       473
+    moderate     0.4755    0.4373    0.4556       311
+      severe     0.5476    0.3740    0.4444       123
+
+    accuracy                         0.6124      1174
+   macro avg     0.5957    0.5837    0.5836      1174
+weighted avg     0.6014    0.6124    0.6033      1174

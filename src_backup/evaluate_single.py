@@ -234,9 +234,9 @@ def save_metrics_json(save_path, metrics):
 def main():
     args = parse_args()
 
-    device = get_device(DEVICE)
-    print(f"Using device: {device}")
-
+    # device = get_device(DEVICE)
+    # print(f"Using device: {device}")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     checkpoint_path = resolve_checkpoint_path(args)
     print(f"Using checkpoint: {checkpoint_path}")
 

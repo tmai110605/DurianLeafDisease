@@ -1,0 +1,19 @@
+{
+    "model": "mobilenetv3_small",
+    "task": "severity",
+    "checkpoint": "/home/thaimq/DurianLeafProject/checkpoints/mobilenetv3_small_task_severity_img224_bs16_lr0.0001/best_mobilenetv3_small_severity.pth",
+    "image_size": 224,
+    "batch_size": 16,
+    "accuracy": 0.6124361158432708,
+    "precision_macro": 0.5956514770334003,
+    "recall_macro": 0.5837009623878366,
+    "f1_macro": 0.5835958127432254,
+    "total_params": 1516338,
+    "trainable_params": 1516338,
+    "flops": 61164768.0,
+    "flops_readable": "61.165M",
+    "params_readable": "1.516M",
+    "epoch": 38,
+    "val_loss": 0.8144124758549226,
+    "val_acc": 0.6435897435897436
+}

@@ -1,7 +1,7 @@
 import argparse
 import json
 from pathlib import Path
-
+import time
 import torch
 from torch.utils.data import DataLoader
 from torchvision import transforms
@@ -205,13 +205,27 @@ def clean_state_dict(state_dict):
 
 def plot_confusion_matrix(cm, class_names, save_path, title):
     plt.figure(figsize=(8, 6))
-    plt.imshow(cm)
+    plt.imshow(cm, cmap="Blues")
     plt.title(title)
     plt.colorbar()
 
     tick_marks = np.arange(len(class_names))
     plt.xticks(tick_marks, class_names, rotation=45, ha="right")
     plt.yticks(tick_marks, class_names)
+
+    thresh = cm.max() / 2.0
+
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            plt.text(
+                j, i,
+                format(cm[i, j], "d"),
+                ha="center",
+                va="center",
+                color="white" if cm[i, j] > thresh else "black",
+                fontsize=12,
+                fontweight="bold"
+            )
 
     plt.xlabel("Predicted")
     plt.ylabel("True")
@@ -228,9 +242,9 @@ def save_metrics_json(save_path, metrics):
 def main():
     args = parse_args()
 
-    device = get_device(DEVICE)
-    print(f"Using device: {device}")
-
+    # device = get_device(DEVICE)
+    # print(f"Using device: {device}")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     checkpoint_path = resolve_checkpoint_path(args)
     print(f"Using checkpoint: {checkpoint_path}")
 
@@ -276,7 +290,10 @@ def main():
     disease_pred = []
     severity_true = []
     severity_pred = []
+    if device.type == "cuda":
+        torch.cuda.synchronize()
 
+    start_time = time.perf_counter()
     with torch.no_grad():
         for images, disease_labels, severity_labels in test_loader:
             images = images.to(device)
@@ -291,7 +308,16 @@ def main():
 
             disease_true.extend(disease_labels.numpy())
             severity_true.extend(severity_labels.numpy())
+    
+    if device.type == "cuda":
+        torch.cuda.synchronize()
 
+    end_time = time.perf_counter()
+    total_time = end_time - start_time
+    avg_time_per_sample = total_time / len(test_dataset)
+    print(f"\nEvaluation time: {total_time:.4f} seconds")
+    print(f"Average time per sample: {avg_time_per_sample:.6f} seconds")
+    
     disease_names = [
         "healthy",
         "algal",
