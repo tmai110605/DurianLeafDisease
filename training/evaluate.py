@@ -205,7 +205,7 @@ def clean_state_dict(state_dict):
 
 def plot_confusion_matrix(cm, class_names, save_path, title):
     plt.figure(figsize=(8, 6))
-    plt.imshow(cm)
+    plt.imshow(cm, cmap="Blues")
     plt.title(title)
     plt.colorbar()
 
@@ -213,11 +213,27 @@ def plot_confusion_matrix(cm, class_names, save_path, title):
     plt.xticks(tick_marks, class_names, rotation=45, ha="right")
     plt.yticks(tick_marks, class_names)
 
+    thresh = cm.max() / 2.0
+
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            plt.text(
+                j, i,
+                format(cm[i, j], "d"),
+                ha="center",
+                va="center",
+                color="white" if cm[i, j] > thresh else "black",
+                fontsize=12,
+                fontweight="bold"
+            )
+
     plt.xlabel("Predicted")
     plt.ylabel("True")
     plt.tight_layout()
     plt.savefig(save_path, dpi=300)
     plt.close()
+
+
 
 
 def save_metrics_json(save_path, metrics):
@@ -228,8 +244,8 @@ def save_metrics_json(save_path, metrics):
 def main():
     args = parse_args()
 
-    device = get_device(DEVICE)
-    print(f"Using device: {device}")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print("Using device:", device)
 
     checkpoint_path = resolve_checkpoint_path(args)
     print(f"Using checkpoint: {checkpoint_path}")
