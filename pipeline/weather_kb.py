@@ -85,7 +85,7 @@ def get_address_from_coords(lat: float, lon: float) -> dict:
     try:
         url = "https://nominatim.openstreetmap.org/reverse"
         headers = {
-            "User-Agent": "DurianLeafProject/1.0 (contact: support@durianleaf.com)"
+            "User-Agent": "DurianLeafDisease/1.0 (contact: support@durianleaf.com)"
         }
         params = {
             "format": "json",

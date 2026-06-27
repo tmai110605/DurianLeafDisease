@@ -1,4 +1,4 @@
-# 🌿 DurianLeafProject
+# 🌿 DurianLeafDisease
 
 A modern deep learning codebase for **multi-task and single-task classification** of durian leaf diseases and severity levels. It combines custom-built convolutional neural networks (CNNs), Depth Estimation (Depth Anything V2), Geo-GradCAM 3D, Weather forecasting integration, and Large Language Model (Llama-3.3-70b via Groq) case-based treatment recommendations.
 ---
@@ -28,7 +28,7 @@ A modern deep learning codebase for **multi-task and single-task classification*
 ## 🗂️ Project Directory Structure
 
 ```
-DurianLeafProject/
+DurianLeafDisease/
 ├── app/                          # 🖥️ Interactive Streamlit Interface
 │   ├── app.py                    # Streamlit web app main script
 │   └── __init__.py
@@ -103,7 +103,7 @@ DurianLeafProject/
 ## 🚀 Running the Project
 
 > [!IMPORTANT]
-> **Always run the scripts from the project root directory** (e.g., `DurianLeafProject/`) to ensure the modular imports (`models.*`, `training.*`, `pipeline.*`) work correctly.
+> **Always run the scripts from the project root directory** (e.g., `DurianLeafDisease/`) to ensure the modular imports (`models.*`, `training.*`, `pipeline.*`) work correctly.
 
 ### 1. Start the Streamlit Web Application
 Run the interactive web app locally from the project root:
