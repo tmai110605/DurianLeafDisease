@@ -1,7 +1,6 @@
 # 🌿 DurianLeafProject
 
 A modern deep learning codebase for **multi-task and single-task classification** of durian leaf diseases and severity levels. It combines custom-built convolutional neural networks (CNNs), Depth Estimation (Depth Anything V2), Geo-GradCAM 3D, Weather forecasting integration, and Large Language Model (Llama-3.3-70b via Groq) case-based treatment recommendations.
-
 ---
 
 ## 📌 Highlight Features
@@ -11,8 +10,20 @@ A modern deep learning codebase for **multi-task and single-task classification*
 - **Geo-GradCAM 3D Visualisation**: Reconstructs depth using *Depth Anything V2*, aligns it with Grad-CAM saliency maps, and renders an interactive 3D surface plot using Plotly.
 - **Context-Aware Recommendations**: Leverages a local Case-Based Reasoning (CBR) database combined with real-time weather forecasts (via Open-Meteo) and geo-coordinates (via Nominatim reverse-geocoding) to generate customised treatment plans using Llama-3.3-70b.
 - **Premium Streamlit Interface**: An interactive web app featuring browser geolocation, real-time weather risks, depth estimation overlays, interactive 3D graphics, and printable diagnostic summaries.
-
 ---
+## 🚀 Output Pipeline
+**1. Predict disease and severity level using CNN**
+![alt text](image.png)
+**2. Weather Data Acquisition**
+![alt text](image-1.png)
+**3. Grad-CAM 2D Visualisation**
+![alt text](image-2.png)
+**4. Geo-GradCAM 3D Visualisation**
+![alt text](image-3.png)
+**5. Treatment Recommendations**
+![alt text](image-4.png)
+**6. Some References for Treatment Recommendations**
+![alt text](image-5.png)
 
 ## 🗂️ Project Directory Structure
 

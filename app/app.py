@@ -216,7 +216,7 @@ with st.sidebar:
     st.markdown('<p class="sidebar-label">Model checkpoint</p>', unsafe_allow_html=True)
     checkpoint_path = st.text_input(
         "Checkpoint path",
-        value=r"checkpoints/v2batch16_best/best_mobilenetv3_multitask.pth",
+        value=r"checkpoints/v2batch16_best/best_mobilenetv2_multitask.pth",
         label_visibility="collapsed",
         placeholder="path/to/checkpoint.pth",
     )
