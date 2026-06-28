@@ -9,6 +9,7 @@ dựa trên kết quả CNN phân loại bệnh lá sầu riêng.
 import json
 import os
 import sys
+import time
 from pathlib import Path
 from typing import Optional
 from dotenv import load_dotenv
@@ -356,11 +357,14 @@ def get_recommendation(
     prompt = build_prompt(case, source_titles, weather_data=weather_data, location=location)
 
     try:
+        t_start = time.time()
         recommendation_text = call_groq(prompt=prompt, model=model, max_tokens=max_tokens, api_key=api_key)
+        groq_time = time.time() - t_start
         error = None
     except Exception as e:
         recommendation_text = None
         error = str(e)
+        groq_time = time.time() - t_start
 
     return {
         "disease_label": disease_label,
@@ -373,6 +377,7 @@ def get_recommendation(
         "source_titles": source_titles,
         "prompt": prompt,
         "error": error,
+        "groq_time": groq_time,
     }
 
 

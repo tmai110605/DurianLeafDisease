@@ -26,6 +26,27 @@ import plotly.graph_objects as go
 from models.mobilenetv3_custom import MobileNetV2MultiTask
 from pipeline.recommender import *
 from pipeline.weather_kb import *
+import time
+import thop
+
+_DEPTH_ANYTHING_FLOPS = None
+_DEPTH_ANYTHING_PARAMS = None
+
+def get_depth_anything_flops_and_params(model, device="cpu"):
+    global _DEPTH_ANYTHING_FLOPS, _DEPTH_ANYTHING_PARAMS
+    if _DEPTH_ANYTHING_FLOPS is None:
+        try:
+            import torch
+            dummy_input = torch.randn(1, 3, 518, 518).to(device)
+            # Run thop profile silently
+            flops, params = thop.profile(model, inputs=(dummy_input,), verbose=False)
+            _DEPTH_ANYTHING_FLOPS = flops
+            _DEPTH_ANYTHING_PARAMS = params
+        except Exception as e:
+            print(f"Error profiling Depth-Anything V2 with thop: {e}")
+            _DEPTH_ANYTHING_FLOPS = 0.0
+            _DEPTH_ANYTHING_PARAMS = 0.0
+    return _DEPTH_ANYTHING_FLOPS, _DEPTH_ANYTHING_PARAMS
 
 # =====================================================
 # DEVICE
@@ -181,16 +202,23 @@ def overlay_cam_on_image(rgb_img, cam, alpha=0.45):
 def estimate_depth(pil_img, max_size=200):
     """
     Trả về depth_small đã normalize và scale,
-    cùng với (new_h, new_w) để resize CAM theo.
+    cùng với (new_h, new_w) để resize CAM theo, và một dict chứa các thông số đo đạc.
     """
+    t_load_start = time.time()
     depth_pipe = hf_pipeline(
         "depth-estimation",
         model="depth-anything/Depth-Anything-V2-Small-hf"
     )
+    t_load_end = time.time()
 
+    t_infer_start = time.time()
     depth = np.array(
         depth_pipe(pil_img)["depth"]
     ).astype(np.float32)
+    t_infer_end = time.time()
+
+    # Đo FLOPs và Params bằng thop
+    flops, params = get_depth_anything_flops_and_params(depth_pipe.model, device=DEVICE)
 
     h, w = depth.shape
     scale = min(max_size / h, max_size / w)
@@ -203,7 +231,14 @@ def estimate_depth(pil_img, max_size=200):
     depth_small = (depth_small - depth_small.min()) / (depth_small.max() - depth_small.min())
     depth_small = depth_small * 50
 
-    return depth_small, new_h, new_w
+    metrics = {
+        "load_time": t_load_end - t_load_start,
+        "infer_time": t_infer_end - t_infer_start,
+        "flops": flops,
+        "params": params,
+    }
+
+    return depth_small, new_h, new_w, metrics
 
 # =====================================================
 # 3D VISUALIZATION (Geo-GradCAM)
@@ -305,10 +340,14 @@ def run_pipeline(
     -------
     dict chứa prediction results, recommendation, và paths file đã lưu.
     """
+    execution_times = {}
+    total_start = time.time()
+    
     os.makedirs(output_dir, exist_ok=True)
     base_name = os.path.splitext(os.path.basename(str(image_path)))[0]
 
     # ── 0. Vị trí + thời tiết ──────────────────────
+    t_weather_start = time.time()
     weather_data = None
     location     = None
 
@@ -325,23 +364,35 @@ def run_pipeline(
         except Exception as e:
             print(f"  Weather lookup failed: {e}")
             weather_data = None
+    execution_times["weather_location"] = time.time() - t_weather_start
 
     # ── 1. Load ảnh ────────────────────────────────
+    t_img_start = time.time()
     print("[1/5] Loading image...")
     pil_img = Image.open(image_path).convert("RGB")
+    execution_times["image_loading"] = time.time() - t_img_start
 
     # ── 2. Depth Estimation ────────────────────────
     print("[2/5] Running Depth Anything V2...")
-    depth_small, new_h, new_w = estimate_depth(pil_img, max_size=max_size)
+    t_depth_start = time.time()
+    depth_small, new_h, new_w, depth_metrics = estimate_depth(pil_img, max_size=max_size)
+    execution_times["depth_model_load"] = depth_metrics["load_time"]
+    execution_times["depth_inference"] = depth_metrics["infer_time"]
+    execution_times["depth_estimation"] = time.time() - t_depth_start
+    depth_flops = depth_metrics["flops"]
+    depth_params = depth_metrics["params"]
 
     # ── 3. Load model + phân loại ──────────────────
     print("[3/5] Loading model & computing predictions...")
+    t_classifier_load_start = time.time()
     model = MobileNetV2MultiTask(
         num_disease_classes=5,
         num_severity_classes=4
     )
     model = load_checkpoint(model, checkpoint_path, DEVICE)
+    execution_times["classifier_model_loading"] = time.time() - t_classifier_load_start
 
+    t_classifier_infer_start = time.time()
     input_tensor, original_rgb = load_image(image_path, img_size)
     input_tensor = input_tensor.to(DEVICE)
 
@@ -351,6 +402,7 @@ def run_pipeline(
         severity_probs = F.softmax(severity_logits, dim=1)[0]
         disease_idx    = torch.argmax(disease_probs).item()
         severity_idx   = torch.argmax(severity_probs).item()
+    execution_times["classifier_inference"] = time.time() - t_classifier_infer_start
 
     print(f"  Disease  -> {DISEASE_LABELS[disease_idx]}  ({disease_probs[disease_idx]:.4f})")
     print(f"  Severity -> {SEVERITY_LABELS[severity_idx]} ({severity_probs[severity_idx]:.4f})")
@@ -373,6 +425,7 @@ def run_pipeline(
         weather_data=weather_data,
         location=location,
     )
+    execution_times["groq_call"] = recommendation.get("groq_time", 0.0)
 
     print("\n===== RECOMMENDATION =====\n")
     if recommendation["error"]:
@@ -382,15 +435,21 @@ def run_pipeline(
 
     # ── 4. Grad-CAM + 5. Geo-GradCAM ──────────────
     print("[4/5] Computing Grad-CAM...")
+    t_gradcam_start = time.time()
     gradcam = GradCAM(model, model.features[-1])
 
     task_results = {}
+    t_gradcam_calc_total = 0.0
+    t_rendering_total = 0.0
+    
     for task_for_cam in tasks:
         print(f"  [{task_for_cam}] computing GradCAM...")
 
+        t_calc_start = time.time()
         cam, cam_class_idx, cam_probs = gradcam(
             input_tensor, task=task_for_cam, class_idx=None
         )
+        t_gradcam_calc_total += (time.time() - t_calc_start)
 
         # ── Resize CAM → ảnh gốc (cho 2D overlay) ─
         cam_2d = cv2.resize(cam, (img_size, img_size))
@@ -406,6 +465,7 @@ def run_pipeline(
             "geo_gradcam_html":  None,
         }
 
+        t_render_start = time.time()
         # ── 4a. Lưu 2D overlay ────────────────────
         if save_2d_overlay:
             overlay = overlay_cam_on_image(original_rgb, cam_2d)
@@ -433,10 +493,15 @@ def run_pipeline(
                 show=show_3d,
             )
             task_data["geo_gradcam_html"] = html_path
+        t_rendering_total += (time.time() - t_render_start)
 
         task_results[task_for_cam] = task_data
 
     gradcam.remove_hooks()
+    
+    execution_times["gradcam_computation"] = t_gradcam_calc_total
+    execution_times["geo_gradcam_rendering"] = t_rendering_total
+    execution_times["total_pipeline"] = time.time() - total_start
 
     return {
         "disease_idx":          disease_idx,
@@ -450,6 +515,9 @@ def run_pipeline(
         "location":             location,
         "recommendation":       recommendation,
         "tasks":                task_results,
+        "execution_times":      execution_times,
+        "depth_flops":          depth_flops,
+        "depth_params":         depth_params,
     }
 
 
