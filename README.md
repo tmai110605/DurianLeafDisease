@@ -11,19 +11,63 @@ A modern deep learning codebase for **multi-task and single-task classification*
 - **Context-Aware Recommendations**: Leverages a local Case-Based Reasoning (CBR) database combined with real-time weather forecasts (via Open-Meteo) and geo-coordinates (via Nominatim reverse-geocoding) to generate customised treatment plans using Llama-3.3-70b.
 - **Premium Streamlit Interface**: An interactive web app featuring browser geolocation, real-time weather risks, depth estimation overlays, interactive 3D graphics, and printable diagnostic summaries.
 ---
-## 🚀 Output Pipeline
-**1. Predict disease and severity level using CNN**
-![alt text](image.png)
-**2. Weather Data Acquisition**
-![alt text](image-1.png)
-**3. Grad-CAM 2D Visualisation**
-![alt text](image-2.png)
-**4. Geo-GradCAM 3D Visualisation**
-![alt text](image-3.png)
-**5. Treatment Recommendations**
-![alt text](image-4.png)
-**6. Some References for Treatment Recommendations**
-![alt text](image-5.png)
+# 🚀 Output Pipeline
+
+The complete output pipeline of the proposed system is illustrated below.
+
+---
+
+### 🩺 1. Disease & Severity Prediction
+Predict the disease category and severity level using the trained CNN-based multi-task model.
+
+<p align="center">
+  <img src="image.png" alt="Disease and Severity Prediction" width="800">
+</p>
+
+---
+
+### 🌦️ 2. Weather Data Acquisition
+Retrieve real-time weather information based on the user's location.
+
+<p align="center">
+  <img src="image-1.png" alt="Weather Data Acquisition" width="800">
+</p>
+
+---
+
+### 🔥 3. Grad-CAM Visualization
+Generate a 2D Grad-CAM heatmap to highlight the image regions that contribute most to the prediction.
+
+<p align="center">
+  <img src="image-2.png" alt="Grad-CAM Visualization" width="800">
+</p>
+
+---
+
+### 🌍 4. Geo-GradCAM 3D Visualization
+Visualize disease localization in a 3D representation for enhanced interpretability.
+
+<p align="center">
+  <img src="image-3.png" alt="Geo-GradCAM 3D Visualization" width="800">
+</p>
+
+---
+
+### 💊 5. Treatment Recommendation
+Generate treatment recommendations based on the predicted disease, severity level, and current weather conditions.
+
+<p align="center">
+  <img src="image-4.png" alt="Treatment Recommendation" width="800">
+</p>
+
+---
+
+### 📚 6. Supporting References
+Provide reliable references supporting the recommended treatment strategies.
+
+<p align="center">
+  <img src="image-5.png" alt="Treatment References" width="800">
+</p>
 
 ## 🗂️ Project Directory Structure
 
