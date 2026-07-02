@@ -5,7 +5,7 @@ from pathlib import Path
 import torch
 from torch.utils.data import DataLoader
 from torchvision import transforms
-
+import  time
 from sklearn.metrics import (
     classification_report,
     confusion_matrix,
@@ -287,7 +287,7 @@ def main():
 
     model.load_state_dict(state_dict)
     model.eval()
-
+    start_time = time.perf_counter()
     disease_true = []
     disease_pred = []
     severity_true = []
@@ -307,7 +307,12 @@ def main():
 
             disease_true.extend(disease_labels.numpy())
             severity_true.extend(severity_labels.numpy())
-
+    end_time = time.perf_counter()
+    total_eval_time = end_time - start_time
+    num_images = len(test_dataset)
+    avg_time_per_image = total_eval_time / num_images
+    print(f"Total eval time: {total_eval_time:.4f} seconds")
+    print(f"Average time per image: {avg_time_per_image:.4f} seconds")
     disease_names = [
         "healthy",
         "algal",
